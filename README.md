@@ -6,4 +6,4 @@
 
 **Funcionalidad:** El programa permite el registro y actualización del personal del plantel. Permite encontrar a personas de acuerdo a su nombre, puesto, promedio y materias que imparte para seleccionar a los más adecuados en caso de necesitarlo. Consta de un menú con las opciones iniciales y corre sobre consola.
 
-**Consideraciones:** El programa corre en consola y esta hecho con c++ standard *compilar con: "g++ " *correr en linux: "/a.out" *correr en windows: "a.exe"
+**Consideraciones:** El programa corre en consola y esta hecho con c++ standard *compilar con: "g++ Persona.h main.cpp " *correr en linux: "/a.out" *correr en windows: "a.exe"
