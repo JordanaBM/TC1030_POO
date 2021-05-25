@@ -2,7 +2,7 @@
 * Proyecto Escuela clase Persona
 * Jordana Betancourt Menchaca
 * A01707434
-* 18/05/2021
+* 25/05/2021
 * Esta clase define objetos de tipo Persona y es abstracta (ya que no se crean directamente)
 */
 
@@ -27,6 +27,7 @@ class Persona{
     string genero; // Masculino || Femenino
     float altura; // En metros
     string recompensa;
+    string tipo;
     
 
   public: // Modificardores de acceso "público"
@@ -34,7 +35,7 @@ class Persona{
   // Método (función) constructor
 		Persona(); //constructor por Defualt
     Persona(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string generoC, 
-    float alturaC); //constructor Normal (sobrecarga)
+    float alturaC, string tipoC); //constructor Normal (sobrecarga)
     
     //Setters (Modificación/asignación de atributos)
         void set_nombre(string);
@@ -52,10 +53,12 @@ class Persona{
         string get_genero();
         float get_altura();
         string get_recompensa();	
+        string get_tipo();
 
     //Funciones
-      virtual void imprimirDatos() = 0; //Método abstracto que será sobreescrito
-      // virtual void agregarRecompensa() = 0;
+      virtual void imprimirDatos() = 0; //Métodos abstractos que serán sobreescritos
+      virtual void agregarRecompensa() = 0;
+      virtual void agregarCalificacion(float calificacionC) = 0;
     
 };
 
@@ -73,6 +76,7 @@ Persona:: Persona() { //Constructor Vacío (Default)
       genero = 'X';
       altura = 1.60;
       recompensa = "Ninguna";
+      tipo = "N/A";
       
     }
 /*
@@ -84,13 +88,15 @@ Persona:: Persona() { //Constructor Vacío (Default)
 		*
 		* @return Objeto Persona
 		*/
-Persona:: Persona(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string generoC, float alturaC) { //Constructor Normal
+Persona:: Persona(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string generoC, 
+float alturaC,string tipoC) { //Constructor Normal
       nombre = nombreC;
       apellidoPaterno = apellidoPaternoC;
       apellidoMaterno = apellidoMaternoC;
       edad = edadC;
       genero = generoC;
       altura = alturaC;
+      tipo = tipoC;
       recompensa = "Ninguna"; //Todos inician sin recompensa
     }
 
@@ -238,6 +244,16 @@ string Persona::get_recompensa(){
 }
 
 /*
+ * getter tipo
+ *
+ * @param
+ * @return string: tipo
+*/
+string Persona::get_tipo(){
+	return tipo;
+}
+
+/*
  * imprimirDatos
  *
  * @param 
@@ -247,7 +263,9 @@ void Persona:: imprimirDatos(){
   cout<<"\nNombre Completo: "<<get_nombre()<<" "<<get_apellidoPaterno()<<" "<<get_apellidoMaterno()<<endl;
 	cout<<"Edad: "<<get_edad()<<" años"<<endl;
   cout<<"Genero: "<<get_genero()<<endl;
+  cout<<"Tipo: "<<get_tipo()<<endl;
 }
+
 
 /*
 * Proyecto Escuela clase Estudiante
@@ -265,7 +283,7 @@ class Estudiante: public Persona{ // Clase Estudiante que hereda de Persona
     public: //Métodos
         Estudiante(); //constructor por Defualt
         Estudiante(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string generoC, 
-        float alturaC,int matriculaC,int cantidadMateriasC, float promedioC); //constructor Normal (sobrecarga)
+        float alturaC,string tipoC,int matriculaC,int cantidadMateriasC, float promedioC); //constructor Normal (sobrecarga)
 
 //Setters (Modificación/asignación de atributos)
         void set_promedio(float);
@@ -277,8 +295,9 @@ class Estudiante: public Persona{ // Clase Estudiante que hereda de Persona
         float get_promedio();
 // Funciones 
     void nuevaMateria(); // Es como setter de cantidadMaterias
-    void imprimirDatos(); //Sobreescrita para Estudiante
-    // void calificaMaestro(Maestro *m, float calificacion);
+    void imprimirDatos(); // Sobreescritas para Estudiante
+    void agregarRecompensa();
+    void agregarCalificacion(float calificacionC);
     
 
 };
@@ -311,8 +330,8 @@ Estudiante::Estudiante() {
 	* @return Objeto Estudiante
 */
 Estudiante::Estudiante (string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string 
-generoC, float alturaC,int matriculaC, int cantidadMateriasC, float promedioC) : Persona(nombreC,
- apellidoPaternoC,apellidoMaternoC, edadC, generoC, alturaC){
+generoC, float alturaC,string tipoC,int matriculaC, int cantidadMateriasC, float promedioC) : Persona(nombreC,
+ apellidoPaternoC,apellidoMaternoC, edadC, generoC, alturaC,tipoC){
     matricula = matriculaC;
     cantidadMaterias = cantidadMateriasC;
     promedio = promedioC;
@@ -377,30 +396,6 @@ void Estudiante:: nuevaMateria(){
 }
 
 /*
- * calificaMaestrp
- *
- * @param Maestro *m, float calificación
- * @return 
- * 
- * Permite al alumno calificar a un maestro
-*/
-// void Estudiante:: calificaMaestro(Maestro *m,float calificacion){
-//     float prom;
-//     prom = m->get_calfMaestro();
-//     if (prom == 0){
-//         m->set_calfMaestro(calificacion);
-//         cout <<"A " <<m->get_nombre() << " se le agregó una nueva calificación." << endl;
-//         m->agregaAlumno();
-//     }
-//     else{
-//         prom = ((prom * m->get_alumnos()) + calificacion) / (m->get_alumnos() + 1);
-//         m->set_calfMaestro(prom);
-//         cout <<"A " <<m->get_nombre() << " se le agregó una nueva calificación." << endl;
-//         m->agregaAlumno();
-//     }
-// }
-
-/*
  * imprimirDatos
  *
  * @param 
@@ -411,6 +406,60 @@ void Estudiante :: imprimirDatos(){
     cout<<"Matrícula: "<<get_matricula()<<endl;
     cout<<"Promedio: "<<get_promedio()<<endl;
     cout<<"Cantidad de Materias: "<<get_cantidadMaterias()<<endl;
+}
+
+/*
+ * agregarRecompensa
+ *
+ * De acuerdo al promedio del estudiante le agrega décimas extras a su promedio
+ * 
+ * @param 
+ * @return 
+*/
+void Estudiante:: agregarRecompensa(){
+  float npromedio;
+  if(promedio >= 95){
+    recompensa = "Agregar 2 décimas al promedio";
+    npromedio = get_promedio() + .2;
+    promedio = npromedio;
+    cout<<"Por su esfuerzo se le agregan dos décimas a su promedio"<<endl;
+    cout<<"El nuevo promedio de "<<nombre<<" es: "<<promedio<<endl;
+  }
+  else if (promedio >= 90){
+    recompensa = "Agregar 1 décima al promedio";
+    npromedio = get_promedio() + .1;
+    promedio = npromedio;
+    cout<<"Por su esfuerzo se le agregan dos décimas a su promedio"<<endl;
+    cout<<"El nuevo promedio de "<<nombre<<" es: "<<promedio<<endl;
+  }
+  else
+  cout<<"Sigue subiendo tu promedio para obtener recompensas"<<endl;
+}
+
+/*
+ * agregarCalificacion
+ *
+ * Califica al estudiante agregándole una nueva materia y recalculando su promedio
+ * 
+ * @param 
+ * @return 
+*/
+void Estudiante :: agregarCalificacion(float calificacionC){
+  float prom;
+    prom = get_promedio();
+    if (prom == 0){
+        set_promedio(calificacionC);
+        cout <<"A " <<get_nombre() << " se le agregó una nueva materia." << endl;
+        cout <<"Su promedio cambio a: "<<promedio<<endl;
+        nuevaMateria();
+    }
+    else{
+        prom = ((prom* get_cantidadMaterias()) + calificacionC) / (get_cantidadMaterias() + 1);
+        set_promedio(prom);
+        cout <<"A " <<get_nombre() << " se le agregó una nueva materia." << endl;
+        cout <<"Su promedio cambio a: "<<promedio<<endl;
+        nuevaMateria();
+    }
 }
 
 /*
@@ -430,9 +479,10 @@ class Maestro: public Persona{
         float calfMaestro; 
 
 public:
-Maestro();
-Maestro(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string generoC, //constructor por Defualt
- float alturaC,int nominaC, string areaClasesC, int horasAsignadasC,float pagoHoraC,int alumnosC,float calfMaestroC);//constructor Normal (sobrecarga)
+Maestro(); //constructor por Defualt
+Maestro(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string generoC, 
+ float alturaC,string tipoC,int nominaC, string areaClasesC, int horasAsignadasC,float pagoHoraC,
+ int alumnosC,float calfMaestroC);//constructor Normal (sobrecarga)
 
 //Setters (Modificación/asignación de atributos)
         void set_areaClases(string);
@@ -450,6 +500,8 @@ Maestro(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int eda
         void agregaCalificacion(Estudiante *, float);
         void imprimirDatos(); 
         void agregaAlumno();
+        void agregarRecompensa();
+        void agregarCalificacion(float calificacionC);
     
 
 };
@@ -485,8 +537,8 @@ Maestro:: Maestro() {
 	* @return Objeto Maestro
 */
 Maestro::Maestro(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string 
-generoC, float alturaC,int nominaC, string areaClasesC, int horasAsignadasC,float pagoHoraC,int alumnosC, float calfMaestroC) 
-: Persona(nombreC, apellidoPaternoC,apellidoMaternoC, edadC, generoC, alturaC){
+generoC, float alturaC, string tipoC,int nominaC, string areaClasesC, int horasAsignadasC,float pagoHoraC,int alumnosC, float calfMaestroC) 
+: Persona(nombreC, apellidoPaternoC,apellidoMaternoC, edadC, generoC, alturaC,tipoC){
     nomina = nominaC;
     areaClases =  areaClasesC;
     horasAsignadas = horasAsignadasC;
@@ -611,22 +663,7 @@ void Maestro:: agregaAlumno(){
  * 
  * Permite al maestro calificar una materia a estudiantes
 */
-void Maestro:: agregaCalificacion(Estudiante *est, float calificacion){
-    float prom;
-    prom = est->get_promedio();
-    if (prom == 0){
-        est->set_promedio(calificacion);
-        cout <<"A " <<est->get_nombre() << " se le agregó una nueva calificación." << endl;
-        est->nuevaMateria();
-    }
-    else{
-        prom = ((prom * est->get_cantidadMaterias()) + calificacion) / (est->get_cantidadMaterias() + 1);
-        est->set_promedio(prom);
-        cout <<"A " <<est->get_nombre() << " se le agregó una nueva calificación." << endl;
-        est->nuevaMateria();
-    }
 
-}
 
 /*
  * imprimirDatos
@@ -639,135 +676,58 @@ void Maestro :: imprimirDatos(){
     cout<<"Nómina: "<<get_nomina()<<endl;
     cout<<"Área clases: "<<get_areaClases()<<endl;
     cout<<"Horas asignadas: "<<get_horasAsignadas()<<endl;
-    cout<<"Alumnos: "<<get_alumnos()<<endl;
+    cout<<"Número de Alumnos: "<<get_alumnos()<<endl;
     cout<<"Calificación maestro: "<<get_calfMaestro()<<endl;
 }
 
 /*
-* Proyecto Escuela clase Directivo
-* Jordana Betancourt Menchaca
-* A01707434
-* 18/05/2021
-* Esta clase define objetos de tipo Directivo que hereda de la clase Persona
-*/
-class Directivo: public Persona{
-    private: 
-        int nomina;
-        string puesto;
-        int horasTrabajo;
-        float pagoHora;
-
-public:
-Directivo();//constructor por Defualt
-Directivo(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string generoC, 
- float alturaC,int nominaC, string puestoC, int horasTrabajoC, float pagoHoraC);//constructor Normal (sobrecarga)
-    
-
-//Setters (Modificación/asignación de atributos)
-   
-
-// Getters (Obtención/retorno de atributos)
-        int get_nomina();
-        string get_puesto();
-        int get_horasTrabajo();
-        float get_pagoHora();
-// Funciones 
-    void imprimirDatos(); 
-    
-
-};
-
-/*
-	* Constructor por default
-	*
-	* @param
-	* return Objeto Directivo
-    * Llama al constructor vacío de la clase padre (Persona)
-*/
-Directivo:: Directivo() { 
-    nomina = 0;
-    puesto = "Sin puesto";
-    horasTrabajo = 0;
-    pagoHora = 0;
-}
-
-/*
-	* Constructor 
-	*
-    * De contructor Persona
-	* @param string nombreC: nombre, string apellidoPaternoC: apellidoPaterno, 
-    * string apellidoMaternoC: apellidoMaterno, ind edadC : edad, string
-    * generoC : genero (femenino/masculino), float alturaC : altura (en metros)
-    * 
-    * De constructor Directivo
-	* @param int nominaC: nomina, string puestoC: puesto, int horasTrabajoC: horasTrabajo, 
-    * float pagoHoraC: pagoHora
-    *
-	* @return Objeto Estudiante
-*/
-Directivo::Directivo(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, string 
-generoC, float alturaC,int nominaC, string puestoC, int horasTrabajoC,float pagoHoraC) : Persona(nombreC,
- apellidoPaternoC,apellidoMaternoC, edadC, generoC, alturaC){
-    nomina = nominaC;
-    puesto = puestoC;
-    horasTrabajo = horasTrabajoC;
-    pagoHora = pagoHoraC;
-}
-
-// Getters
-
-/*
- * getter nomina
+ * agregarRecompensa
  *
- * @param
- * @return int: nomina
-*/
-int Directivo::get_nomina(){
-	return nomina;
-}
-
-/*
- * getter puesto
- *
- * @param
- * @return float: puesto
-*/
-string Directivo::get_puesto(){
-	return puesto;
-}
-
-/*
- * getter horasTrabajo
- *
- * @param
- * @return float: horasTrabajo
-*/
-int Directivo::get_horasTrabajo(){
-	return horasTrabajo;
-}
-
-/*
- * getter pagoHora
- *
- * @param
- * @return float: pagoHora
-*/
-float Directivo::get_pagoHora(){
-	return pagoHora;
-}
-
-// Funciones
-
-/*
- * imprimirDatos
- *
+ * De acuerdo al promedio del maestro le agrega el sueldo por hora de clase impartida
+ * 
  * @param 
  * @return 
 */
-void Directivo:: imprimirDatos(){
-	Persona :: imprimirDatos();
-    cout<<"Nómina: "<<get_nomina()<<endl;
-    cout<<"Puesto: "<<get_puesto()<<endl;
-    cout<<"Horas asignadas: "<<get_horasTrabajo()<<endl;
+void Maestro:: agregarRecompensa(){
+  if(calfMaestro >= 95){
+    pagoHora = pagoHora + 20;
+    cout<<"Por su esfuerzo se le agregan 20 pesos por hora"<<endl;
+    cout<<"El nuevo pago por hora de "<<nombre<<" es de "<<pagoHora<<endl;
+    cout<<"Su pago por día es "<<pagoHora*horasAsignadas<<endl;
+  }
+  else if (calfMaestro >= 90){
+    pagoHora = pagoHora + 20;
+    cout<<"Por su esfuerzo se le agregan 10 pesos por hora"<<endl;
+    cout<<"El nuevo pago por hora de "<<nombre<<" es de "<<pagoHora<<endl;
+    cout<<"Su pago por día es "<<pagoHora*horasAsignadas<<endl;
+  }
+  else
+  cout<<"Siga brindando excelentes clases para obtener recompensas"<<endl;
+}
+
+/*
+ * agregarCalificacion
+ *
+ * Califica al maestro agregándole una nuevo alumno y recalculando su promedio
+ * 
+ * @param 
+ * @return 
+*/
+void Maestro :: agregarCalificacion(float calificacionC){
+  float prom;
+    prom = get_calfMaestro();
+    if (prom == 0){
+        set_calfMaestro(calificacionC);
+        cout <<"Al profesor " <<get_nombre() << " se le agregó una nueva calificación." << endl;
+        cout<<"Su evaluación como docente es de: "<<calfMaestro<<endl;
+        agregaAlumno();
+    }
+    else{
+        prom = ((prom* get_alumnos()) + calificacionC) / (get_alumnos() + 1);
+        set_calfMaestro(prom);
+        cout <<"Al profesor " <<get_nombre() << " se le agregó una nueva calificación." << endl;
+        cout<<"Su evaluación como docente es de: "<<calfMaestro<<endl;
+        agregaAlumno();
+    }
 }
 #endif
