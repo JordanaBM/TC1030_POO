@@ -3,12 +3,12 @@
 * Jordana Betancourt Menchaca
 * A01707434
 * 18/05/2021
-* Main que sirve como menú (todavía no está implementado)
+* Main que sirve como menú, permite ver todos los datos del personal escolar
 */
+
+
 #include "Persona.h"
-// #include "Estudiante.h"
-// #include "Maestro.h"
-// #include "Directivo.h"
+#include "Escuela.h"
 #include <iostream>
 #include <string>
 
@@ -16,32 +16,20 @@ using namespace std;
 
 int main(){
 
-    //Creo objeto estudiante con constructor vacío
-    Estudiante MiPersona;
-    //Creo objeto estudiante con contructor normal
-    Estudiante Persona2("Alicia","Villanueva","Leal",23,"Femenino",1.65,01234,3,97);
-
-    //Creo objeto maestro con constructor vacío
-    Maestro MiMaestro;
-    //Creo objeto directivo con contructor vacío
-    Directivo MiDirectivo;
-
-    //Obtengo datos de los objetos a partir de getters
-    cout<< MiPersona.get_nombre()<<endl;
-    cout<< Persona2.get_nombre()<<endl;
-    cout<< MiMaestro.get_areaClases()<<endl;
-    cout<< MiDirectivo.get_pagoHora()<<endl;
-
-    //Pruebo funciones
-    Persona2.imprimirDatos();
-    MiMaestro.agregaCalificacion(&Persona2,98.2); //Agrega una materia y recalcula el promedio
-    Persona2.imprimirDatos();
-
-    // cout<<MiMaestro.get_alumnos()<<endl;
-    // Persona2.calificaMaestro(&MiMaestro,98.2);
-     MiMaestro.imprimirDatos();
+    // int opcion,opcion2,edadC,matriculaC,cantidadMateriasC,nominaC,horasAsignadasC,alumnosC;
+    // string nombreC,apellidoPaternoC,apellidoMaternoC,generoC,tipoC,areaClasesC;
+    // float alturaC,promedioC,pagoHoraC,calfMaestroC;
 
 
+     //Creo objeto escuela
+     Escuela MiEscuela;
+     //Creo ejemplos de clase persona
+     MiEscuela.creaEjemplos();
+     MiEscuela.muestraPersonal(); //Polimorfismo
+     MiEscuela.agregaEstudiante("Jordana","Betancourt","Menchaca",19,"Femenino",1.60,"Estudiante",17074,8,98);
+     MiEscuela.muestraPersonal("Estudiante");
 
+	
+          
     return 0;
 }
