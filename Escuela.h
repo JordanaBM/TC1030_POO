@@ -3,12 +3,12 @@
 * Proyecto Escuela clase Empresa
 * Jordana Betancourt Menchaca
 * A01707434
-* 25/05/2021
+* 01/06/2021
 *
 * Esta clase define objeto de tipo Escuela que contiene todas las operaciones
 * para hacer altas de "Personas" en la escuela, como buscador y agregación de
-* calificaciones a alumnos, esta clase es utilizada por la función principal del programa
-* y es parte del proyecto Escuela.
+* calificaciones a alumnos, esta clase es utilizada por la función principal del
+* programa y es parte del proyecto Escuela.
 */
 
 #ifndef ESCUELA_H_
@@ -40,16 +40,22 @@ class Escuela {
         ~Escuela(); //Destructor
 
         void creaEjemplos();
+        //Para mostrar datos
         void muestraPersonal(); //Sobrecarga
         void muestraPersonal(string tipoC); //Sobrecarga
         void muestraRecompensas();
-        void agregaEstudiante(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, 
-        string generoC, float alturaC,string tipoC,int matriculaC,int cantidadMateriasC, float promedioC);
-        void agregaMaestro(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC,
-        string generoC, float alturaC,string tipoC,int nominaC, string areaClasesC, int horasAsignadasC,
+        //Para crear objetos
+        void agregaEstudiante(string nombreC, string apellidoPaternoC,
+        string apellidoMaternoC, int edadC, string generoC, float alturaC,
+        string tipoC,int matriculaC,int cantidadMateriasC, float promedioC);
+        void agregaMaestro(string nombreC, string apellidoPaternoC,
+        string apellidoMaternoC, int edadC,string generoC, float alturaC,
+        string tipoC,int nominaC, string areaClasesC, int horasAsignadasC,
         float pagoHoraC, int alumnosC,float calfMaestroC);
+        //Para busquedas específicas
         void buscaPorNombre(string nombreC);
         void buscaPorGenero(string generoC);
+        //Para asignar nuevas variables a objeto
         void recompensaPersonas(string nombreC);
         void calificaPersonas(string nombreC,string tipoC);
  
@@ -67,7 +73,8 @@ Escuela:: Escuela() { //Constructor Vacío (Default)
 /*
 		* Destructor
 		*
-        * Recorre todo el arreglo destruyendo los objetos Persona que se encuentren en él
+    * Recorre todo el arreglo destruyendo los objetos Persona que se 
+    * encuentren en él
 		* @param
 		* return 
 */
@@ -88,15 +95,17 @@ Escuela :: ~Escuela(){ //Destructor
  * @return
 */
 void Escuela :: creaEjemplos(){
-    personas[numeroPersonas] = new Estudiante("Alicia","Villanueva","Leal",23,"Femenino",1.65,"Estudiante",12345,3,97);
+    personas[numeroPersonas] = new Estudiante("Alicia","Villanueva","Leal",23,
+     "Femenino",1.65,"Estudiante",12345,3,97);
     numeroPersonas++;
-    personas[numeroPersonas] = new Maestro("Alejandro","Martínez","Senega",32,"Masculino",1.80,"Maestro",13644,"Español",
-    5,123.4,20,91.3);
+    personas[numeroPersonas] = new Maestro("Alejandro","Martínez","Senega",32,
+     "Masculino",1.80,"Maestro",13644,"Español",5,123.4,20,91.3);
     numeroPersonas++;
-    personas[numeroPersonas] = new Estudiante("Alberto","Torres","Fernández",19,"Masculino",1.86,"Estudiante",32622,6,92);
+    personas[numeroPersonas] = new Estudiante("Alberto","Torres","Fernández",19,
+     "Masculino",1.86,"Estudiante",32622,6,92);
     numeroPersonas++;
-    personas[numeroPersonas] = new Maestro("Ana","Juárez","Perez",45,"Femenino",1.83,"Maestro",19644,"Ciencias Sociales",
-    5,123.4,20,95.3);
+    personas[numeroPersonas] = new Maestro("Ana","Juárez","Perez",45,"Femenino",
+     1.83,"Maestro",19644,"Ciencias Sociales",5,123.4,20,95.3);
     numeroPersonas++;
 }
 
@@ -157,37 +166,42 @@ void Escuela::muestraRecompensas(){
 /*
 	*agregaEstudiante
     * 
-	* @param string nombreC, string apellidoPaternoC, string apellidoMaternoC, int edadC, string
-    * generoC (femenino/masculino), float alturaC (en metros), string tipoC, int matriculaC,
-    * int cantidadMateriasC, float promedioC
-    * 
+	* @param string nombreC, string apellidoPaternoC, string apellidoMaternoC,
+  * int edadC, string generoC (femenino/masculino), float alturaC (en metros), 
+  * string tipoC, int matriculaC,int cantidadMateriasC, float promedioC
+  *
 	* @return
 */
-void Escuela::agregaEstudiante(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, 
-        string generoC, float alturaC,string tipoC,int matriculaC,int cantidadMateriasC, float promedioC) {
+void Escuela::agregaEstudiante(string nombreC, string apellidoPaternoC,
+ string apellidoMaternoC, int edadC, string generoC, float alturaC,string tipoC,
+ int matriculaC,int cantidadMateriasC, float promedioC) {
 
   //new crea el objeto en tiempo de ejecución para usar polimorfismo
-  personas[numeroPersonas] = new Estudiante(nombreC,apellidoPaternoC,apellidoMaternoC,edadC,generoC, alturaC,
-  tipoC,matriculaC,cantidadMateriasC,promedioC);
+  personas[numeroPersonas] = new Estudiante(nombreC,apellidoPaternoC,
+  apellidoMaternoC,edadC,generoC, alturaC, tipoC,matriculaC,cantidadMateriasC,
+  promedioC);
   numeroPersonas++;
 }
 
 /*
 	*agregaMaestro
-    * 
-	* @param string nombreC, string apellidoPaternoC, string apellidoMaternoC, int edadC, string
-    * generoC (femenino/masculino), float alturaC (en metros), string tipoC, int nominaC,
-    * string areaClasesC, int horasAsignadasC, float pagoHoraC, int alumnosC, float calfMaestro
-    * 
+  * 
+	* @param string nombreC, string apellidoPaternoC, string apellidoMaternoC, 
+  *int edadC, string generoC (femenino/masculino), float alturaC (en metros), 
+  * string tipoC, int nominaC, string areaClasesC, int horasAsignadasC,
+  *  float pagoHoraC, int alumnosC, float calfMaestro
+  *
 	* @return
 */
-void Escuela::agregaMaestro(string nombreC, string apellidoPaternoC,string apellidoMaternoC, int edadC, 
-string generoC, float alturaC,string tipoC,int nominaC, string areaClasesC, int horasAsignadasC,float pagoHoraC,
- int alumnosC,float calfMaestroC) {
+void Escuela::agregaMaestro(string nombreC, string apellidoPaternoC,string 
+ apellidoMaternoC, int edadC, string generoC, float alturaC,string tipoC,int
+ nominaC, string areaClasesC, int horasAsignadasC,float pagoHoraC, int alumnosC,
+ float calfMaestroC) {
 
   //new crea el objeto en tiempo de ejecución para usar polimorfismo
-  personas[numeroPersonas] = new Maestro(nombreC,apellidoPaternoC,apellidoMaternoC,edadC,generoC, alturaC,
-  tipoC,nominaC,areaClasesC,horasAsignadasC,pagoHoraC,alumnosC,calfMaestroC);
+  personas[numeroPersonas] = new Maestro(nombreC,apellidoPaternoC,
+  apellidoMaternoC,edadC,generoC, alturaC,tipoC,nominaC,areaClasesC,
+  horasAsignadasC,pagoHoraC,alumnosC,calfMaestroC);
   numeroPersonas++;
 }
 
@@ -254,8 +268,10 @@ void Escuela :: recompensaPersonas(string nombreC){
 void Escuela :: calificaPersonas(string nombreC, string tipoC){
     float calificacionC;
   for (int i = 0; i < numeroPersonas; i++) {
-    if (personas[i] -> get_nombre() == nombreC && personas[i] -> get_tipo() == tipoC){
-        cout<<"Ingrese la nueva calificación del "<<personas[i] -> get_tipo()<<" "<<nombreC<<endl;
+    if (personas[i] -> get_nombre() == nombreC && personas[i] -> 
+      get_tipo() == tipoC){
+        cout<<"Ingrese la nueva calificación del "<<personas[i] -> get_tipo()<<
+        " "<<nombreC<<endl;
         cin>>calificacionC;
         personas[i] -> agregarCalificacion(calificacionC);
     }
